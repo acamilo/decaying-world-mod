@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "decayingworldmod:block/decay_block" }
+  }
+}

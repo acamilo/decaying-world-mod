@@ -1,0 +1,5 @@
+{
+  "block.decayingworldmod.decay_block" : "Decay Block",
+  "itemGroup.decayingworldmodtab": "Decaying World Tab",
+  "item.decayingworldmod.aether_dust" : "Aether Dust"
+}

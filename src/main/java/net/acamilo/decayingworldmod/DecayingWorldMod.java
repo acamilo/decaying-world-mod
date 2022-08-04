@@ -1,6 +1,8 @@
 package net.acamilo.decayingworldmod;
 
 import com.mojang.logging.LogUtils;
+import net.acamilo.decayingworldmod.block.ModBlocks;
+import net.acamilo.decayingworldmod.item.ModItems;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,6 +22,9 @@ public class DecayingWorldMod
     public DecayingWorldMod()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
