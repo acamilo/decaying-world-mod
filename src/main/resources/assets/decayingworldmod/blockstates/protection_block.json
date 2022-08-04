@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "lit=true": { "model": "decayingworldmod:block/protection_block_on" },
+    "lit=false": { "model": "decayingworldmod:block/protection_block_off" }
+  }
+}

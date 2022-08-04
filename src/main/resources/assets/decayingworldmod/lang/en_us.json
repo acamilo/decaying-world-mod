@@ -1,5 +1,6 @@
 {
   "block.decayingworldmod.decay_block" : "Decay Block",
   "itemGroup.decayingworldmodtab": "Decaying World Tab",
-  "item.decayingworldmod.aether_dust" : "Aether Dust"
+  "item.decayingworldmod.aether_dust" : "Aether Dust",
+  "block.decayingworldmod.protection_block" : "Protection Block"
 }

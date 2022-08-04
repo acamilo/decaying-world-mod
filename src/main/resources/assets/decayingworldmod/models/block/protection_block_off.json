@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "decayingworldmod:block/protection_block_off"
+  }
+}
