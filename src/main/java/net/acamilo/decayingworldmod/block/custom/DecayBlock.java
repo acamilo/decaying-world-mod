@@ -28,7 +28,6 @@ public class DecayBlock extends Block {
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource randomSource) {
         super.randomTick(state, level, pos, randomSource);
-        LOGGER.debug("Decay block got a random tick!");
         level.scheduleTick(pos, this, 1);
     }
 
