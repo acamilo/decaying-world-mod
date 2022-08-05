@@ -1,7 +1,6 @@
 package net.acamilo.decayingworldmod.block.custom;
 
 import com.mojang.logging.LogUtils;
-import net.acamilo.decayingworldmod.DecayingWorldMod;
 import net.acamilo.decayingworldmod.block.entity.ModBlockEntities;
 import net.acamilo.decayingworldmod.block.entity.custom.ProtectionBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -25,10 +24,6 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
 public class ProtectionBlock extends BaseEntityBlock {
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -48,7 +43,7 @@ public class ProtectionBlock extends BaseEntityBlock {
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos blockPos, Player player, boolean willHarvest, FluidState fluid) {
         if(!level.isClientSide()) {
-            removePosition(blockPos, level);
+            ProtectionBlockEntity.removePosition(blockPos, level);
         }
         return super.onDestroyedByPlayer(state, level, blockPos, player, willHarvest, fluid);
     }
@@ -56,37 +51,6 @@ public class ProtectionBlock extends BaseEntityBlock {
     @Override
     public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState1, boolean b) {
         super.onPlace(blockState, level, blockPos, blockState1, b);
-    }
-
-    // Position of all beacons.
-    public static HashSet<BlockPos> PROTECTED_BLOCKS = new HashSet<BlockPos>();
-
-    public static void registerPosition(BlockPos pos, Level world){
-        PROTECTED_BLOCKS.add(pos);
-        LOGGER.debug("Added position  (" + PROTECTED_BLOCKS.size() + ")");
-    }
-
-    public static void removePosition(BlockPos pos, Level world){
-        PROTECTED_BLOCKS.remove(pos);
-        LOGGER.debug("Removed position  (" + PROTECTED_BLOCKS.size() + ")");
-    }
-
-    private static double getDistance(BlockPos a,BlockPos b){
-        double deltaX = a.getX() - b.getX();
-        double deltaY = a.getY() - b.getY();
-        double deltaZ = a.getZ() - b.getZ();
-
-        return Math.sqrt((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ));
-    }
-
-    public static boolean isProtected(BlockPos b){
-        for (BlockPos prot : PROTECTED_BLOCKS){
-
-            if (getDistance(b,prot)<32){
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

@@ -2,16 +2,14 @@ package net.acamilo.decayingworldmod.block.custom;
 
 import com.mojang.logging.LogUtils;
 import net.acamilo.decayingworldmod.block.ModBlocks;
+import net.acamilo.decayingworldmod.block.entity.custom.ProtectionBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.item.FallingBlockEntity;
-import net.acamilo.decayingworldmod.block.ModBlocks;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.structure.templatesystem.BlockStateMatchTest;
 import org.slf4j.Logger;
 
 public class DecayBlock extends Block {
@@ -42,7 +40,7 @@ public class DecayBlock extends Block {
                 pos.south()
         };
         // do not spread if block is protected
-        if (ProtectionBlock.isProtected(pos)){
+        if (ProtectionBlockEntity.isProtected(pos)){
             //serverLevel.setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
             return;
         }
