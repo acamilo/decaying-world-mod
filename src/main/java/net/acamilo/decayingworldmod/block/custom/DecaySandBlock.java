@@ -1,6 +1,7 @@
 package net.acamilo.decayingworldmod.block.custom;
 
 import net.acamilo.decayingworldmod.block.ModBlocks;
+import net.acamilo.decayingworldmod.block.entity.custom.ProtectionBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.level.Level;
@@ -18,6 +19,10 @@ public class DecaySandBlock extends FallingBlock {
     public void onLand(Level level, BlockPos pos, BlockState state, BlockState state1, FallingBlockEntity fallingBlockEntity) {
         super.onLand(level, pos, state, state1, fallingBlockEntity);
         // When the block lands, spawn more decay.
+        if (ProtectionBlockEntity.isProtected(pos)){
+            //serverLevel.setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
+            return;
+        }
         level.setBlockAndUpdate(pos.below(), ModBlocks.DECAY_BLOCK.get().defaultBlockState());
 
     }

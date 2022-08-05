@@ -47,7 +47,12 @@ public class DecayBlock extends Block {
         }
 
         // replace self with decay sand
-        serverLevel.setBlockAndUpdate(pos, ModBlocks.DECAY_SAND_BLOCK.get().defaultBlockState());
+
+        if (source.nextDouble()>0.05)
+            serverLevel.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+        else
+            serverLevel.setBlockAndUpdate(pos, ModBlocks.DECAY_SAND_BLOCK.get().defaultBlockState());
+
         BlockState bs = ModBlocks.DECAY_BLOCK.get().defaultBlockState();
         for (BlockPos b : neighbors){
             BlockState block = serverLevel.getBlockState(b);
