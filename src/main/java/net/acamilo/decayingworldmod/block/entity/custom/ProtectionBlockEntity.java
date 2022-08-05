@@ -37,7 +37,9 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
     public static HashSet<BlockPos> PROTECTED_BLOCKS = new HashSet<BlockPos>();
     protected final ContainerData data;
     private int progress = 0;
-    private int maxProgress = 3600*20;
+    private int maxProgress = 300;//3600*20;
+
+    private boolean protectionEventFired = false;
     private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -171,22 +173,33 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, ProtectionBlockEntity pBlockEntity) {
-
+        if (pBlockEntity.progress==0 && pBlockEntity.protectionEventFired==false)
+            if(!pBlockEntity.level.isClientSide()) {
+                removePosition(pPos, pBlockEntity.level);
+                pBlockEntity.protectionEventFired=true;
+            }
 
         if (pBlockEntity.progress>0){
             pBlockEntity.progress--;
             setChanged(pLevel,pPos,pState);
         }
-        burnItem(pBlockEntity);
+        if (burnItem(pBlockEntity))
+            if(!pBlockEntity.level.isClientSide()) {
+                registerPosition(pPos, pBlockEntity.level);
+                pBlockEntity.protectionEventFired=false;
+            }
+
+
     }
 
-    private static void burnItem(ProtectionBlockEntity entity){
+    private static boolean burnItem(ProtectionBlockEntity entity){
         boolean hasItemInSlot = entity.itemHandler.getStackInSlot(0).getItem() == ModItems.AETHER_DUST.get();
         if (hasItemInSlot && entity.progress==0){
             entity.itemHandler.extractItem(0, 1, false);
             entity.progress= entity.maxProgress;
+            return true;
         }
-
+    return false;
 
     }
     private static void craftItem(ProtectionBlockEntity entity) {

@@ -58,13 +58,14 @@ public class DecayBlock extends Block {
             BlockState block = serverLevel.getBlockState(b);
             if (block.isAir()==false){
                 if(!(block.is(ModBlocks.DECAY_BLOCK.get()) || block.is(ModBlocks.DECAY_SAND_BLOCK.get()))) {
-                    serverLevel.setBlockAndUpdate(b, bs);
+                    if (!block.is(Blocks.WATER))
+                        serverLevel.setBlockAndUpdate(b, bs);
                 }
             }
         }
     }
     protected int spreadDelay() {
-        return 20+(int)(Math.random()*50);
+        return 20+(int)(Math.random()*5000);
     }
 
 
