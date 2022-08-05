@@ -1,5 +1,6 @@
 package net.acamilo.decayingworldmod.screen;
 
+import com.mojang.logging.LogUtils;
 import net.acamilo.decayingworldmod.block.ModBlocks;
 import net.acamilo.decayingworldmod.block.entity.custom.ProtectionBlockEntity;
 import net.acamilo.decayingworldmod.screen.slot.ModResultSlot;
@@ -48,10 +49,15 @@ public class ProtectionBlockMenu extends AbstractContainerMenu {
     }
 
     public int getScaledProgress(){
+        if (this.level.isClientSide()) {
+
+        }
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);
         int progressArrowSize = 26;
-
+        //if (this.level.isClientSide()) {
+        //    LogUtils.getLogger().debug("Progress is: "+progress);
+        //}
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
 

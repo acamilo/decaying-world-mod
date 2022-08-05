@@ -2,6 +2,7 @@ package net.acamilo.decayingworldmod.block.entity.custom;
 
 import net.acamilo.decayingworldmod.block.custom.ProtectionBlock;
 import net.acamilo.decayingworldmod.block.entity.ModBlockEntities;
+import net.acamilo.decayingworldmod.item.ModItems;
 import net.acamilo.decayingworldmod.screen.ProtectionBlockMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,7 +34,7 @@ import java.util.Random;
 public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
     protected final ContainerData data;
     private int progress = 0;
-    private int maxProgress = 72;
+    private int maxProgress = 3600*20;
     private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -139,13 +140,24 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, ProtectionBlockEntity pBlockEntity) {
-        pBlockEntity.progress++;
-        setChanged(pLevel,pPos,pState);
-        if (pBlockEntity.progress > pBlockEntity.maxProgress){
-            pBlockEntity.progress=0;
+
+
+        if (pBlockEntity.progress>0){
+            pBlockEntity.progress--;
+            setChanged(pLevel,pPos,pState);
         }
+        burnItem(pBlockEntity);
     }
 
+    private static void burnItem(ProtectionBlockEntity entity){
+        boolean hasItemInSlot = entity.itemHandler.getStackInSlot(0).getItem() == ModItems.AETHER_DUST.get();
+        if (hasItemInSlot && entity.progress==0){
+            entity.itemHandler.extractItem(0, 1, false);
+            entity.progress= entity.maxProgress;
+        }
+
+
+    }
     private static void craftItem(ProtectionBlockEntity entity) {
         entity.itemHandler.extractItem(0, 1, false);
         /*
