@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 
 public class DecayBlock extends Block {
@@ -45,12 +46,13 @@ public class DecayBlock extends Block {
             return;
         }
 
-        serverLevel.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+        // replace self with decay sand
+        serverLevel.setBlockAndUpdate(pos, ModBlocks.DECAY_SAND_BLOCK.get().defaultBlockState());
         BlockState bs = ModBlocks.DECAY_BLOCK.get().defaultBlockState();
         for (BlockPos b : neighbors){
             BlockState block = serverLevel.getBlockState(b);
             if (block.isAir()==false){
-                if (block.is(ModBlocks.DECAY_BLOCK.get())==false) {
+                if(!(block.is(ModBlocks.DECAY_BLOCK.get()) || block.is(ModBlocks.DECAY_SAND_BLOCK.get()))) {
                     serverLevel.setBlockAndUpdate(b, bs);
                 }
             }

@@ -2,6 +2,7 @@ package net.acamilo.decayingworldmod.block;
 
 import net.acamilo.decayingworldmod.DecayingWorldMod;
 import net.acamilo.decayingworldmod.block.custom.DecayBlock;
+import net.acamilo.decayingworldmod.block.custom.DecaySandBlock;
 import net.acamilo.decayingworldmod.block.custom.ProtectionBlock;
 import net.acamilo.decayingworldmod.item.ModCreativeModeTab;
 import net.acamilo.decayingworldmod.item.ModItems;
@@ -22,8 +23,12 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, DecayingWorldMod.MOD_ID);
 
+
     public static final RegistryObject<Block> DECAY_BLOCK = registerBlock("decay_block",
             () -> new DecayBlock(BlockBehaviour.Properties.of(Material.STONE).randomTicks()), ModCreativeModeTab.DECAYING_WORLD_MOD_TAB);
+
+    public static final RegistryObject<Block> DECAY_SAND_BLOCK = registerBlock("decay_sand_block",
+            () -> new DecaySandBlock(BlockBehaviour.Properties.of(Material.SAND).randomTicks()), ModCreativeModeTab.DECAYING_WORLD_MOD_TAB);
 
     public static final RegistryObject<Block> PROTECTION_BLOCK = registerBlock("protection_block",
             () -> new ProtectionBlock(BlockBehaviour.Properties
