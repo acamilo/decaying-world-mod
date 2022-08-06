@@ -40,7 +40,7 @@ public class DecayBlock extends Block {
                 pos.south()
         };
         // do not spread if block is protected
-        if (ProtectionBlockEntity.isProtected(pos)){
+        if (ProtectionBlockEntity.isProtected(pos,serverLevel)){
             //serverLevel.setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
             return;
         }

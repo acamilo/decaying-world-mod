@@ -18,7 +18,7 @@ public class DecaySandBlock extends FallingBlock {
     public void onLand(Level level, BlockPos pos, BlockState state, BlockState state1, FallingBlockEntity fallingBlockEntity) {
         super.onLand(level, pos, state, state1, fallingBlockEntity);
         // When the block lands, spawn more decay.
-        if (ProtectionBlockEntity.isProtected(pos)){
+        if (ProtectionBlockEntity.isProtected(pos,level)){
             //serverLevel.setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
             return;
         }
