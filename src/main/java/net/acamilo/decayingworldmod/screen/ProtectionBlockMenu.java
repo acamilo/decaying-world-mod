@@ -1,9 +1,7 @@
 package net.acamilo.decayingworldmod.screen;
 
-import com.mojang.logging.LogUtils;
 import net.acamilo.decayingworldmod.block.ModBlocks;
 import net.acamilo.decayingworldmod.block.entity.custom.ProtectionBlockEntity;
-import net.acamilo.decayingworldmod.screen.slot.ModResultSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +11,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import org.jetbrains.annotations.Nullable;
 
 public class ProtectionBlockMenu extends AbstractContainerMenu {
     private final ProtectionBlockEntity blockEntity;

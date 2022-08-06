@@ -1,7 +1,7 @@
 package net.acamilo.decayingworldmod;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.world.level.ChunkPos;
+import net.acamilo.decayingworldmod.utility.DimensionAwareChunkPosition;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraftforge.event.TickEvent;
@@ -22,32 +22,6 @@ public class DecaySpawnEventHandler
     public static void removeChunkPos(DimensionAwareChunkPosition p){
         LOADED_CHUNKS.remove(p);
         LOGGER.debug("Removed Chunk Position ("+p.position+":"+p.level.effectsLocation().getPath()+") to pool ("+LOADED_CHUNKS.size()+")");
-    }
-
-    private class DimensionAwareChunkPosition {
-        public ChunkPos position;
-        public DimensionType level;
-        public DimensionAwareChunkPosition(ChunkPos p, DimensionType l){
-            this.position = p;
-            this.level = l;
-        }
-
-        @Override
-        public int hashCode() {
-            return this.position.hashCode() * this.level.hashCode();
-        }
-        @Override
-        public boolean equals(Object o){
-            if (o==null) return false;
-            if(o instanceof DimensionAwareChunkPosition) {
-                DimensionAwareChunkPosition cp = (DimensionAwareChunkPosition) o;
-                if (cp.position.equals(this.position) && cp.level.equals(this.level))
-                        return true;
-            }
-            return false;
-        }
-
-
     }
 
     @SubscribeEvent

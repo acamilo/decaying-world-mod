@@ -2,6 +2,7 @@ package net.acamilo.decayingworldmod.block.custom;
 
 import com.mojang.logging.LogUtils;
 import net.acamilo.decayingworldmod.block.entity.ModBlockEntities;
+import net.acamilo.decayingworldmod.utility.DimensionAwareBlockPosition;
 import net.acamilo.decayingworldmod.block.entity.custom.ProtectionBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,7 +44,7 @@ public class ProtectionBlock extends BaseEntityBlock {
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos blockPos, Player player, boolean willHarvest, FluidState fluid) {
         if(!level.isClientSide()) {
-            ProtectionBlockEntity.removePosition(blockPos, level);
+            ProtectionBlockEntity.removePosition(new DimensionAwareBlockPosition(blockPos, level.dimensionType()));
         }
         return super.onDestroyedByPlayer(state, level, blockPos, player, willHarvest, fluid);
     }

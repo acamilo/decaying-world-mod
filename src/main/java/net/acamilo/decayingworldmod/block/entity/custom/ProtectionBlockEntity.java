@@ -1,10 +1,10 @@
 package net.acamilo.decayingworldmod.block.entity.custom;
 
 import com.mojang.logging.LogUtils;
-import net.acamilo.decayingworldmod.block.custom.ProtectionBlock;
 import net.acamilo.decayingworldmod.block.entity.ModBlockEntities;
 import net.acamilo.decayingworldmod.item.ModItems;
 import net.acamilo.decayingworldmod.screen.ProtectionBlockMenu;
+import net.acamilo.decayingworldmod.utility.DimensionAwareBlockPosition;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -34,7 +34,7 @@ import java.util.HashSet;
 public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
     private static final Logger LOGGER = LogUtils.getLogger();
     // Position of all beacons.
-    public static HashSet<BlockPos> PROTECTED_BLOCKS = new HashSet<BlockPos>();
+    public static HashSet<DimensionAwareBlockPosition> PROTECTED_BLOCKS = new HashSet<DimensionAwareBlockPosition>();
     protected final ContainerData data;
     private int progress = 0;
     private int maxProgress = 300;//3600*20;
@@ -77,20 +77,20 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
         };
     }
 
-    public static void registerPosition(BlockPos pos, Level world){
-        PROTECTED_BLOCKS.add(pos);
+    public static void registerPosition(DimensionAwareBlockPosition b){
+        PROTECTED_BLOCKS.add(b);
         LOGGER.debug("Added position  (" + PROTECTED_BLOCKS.size() + ")");
     }
 
-    public static void removePosition(BlockPos pos, Level world){
-        PROTECTED_BLOCKS.remove(pos);
+    public static void removePosition(DimensionAwareBlockPosition b){
+        PROTECTED_BLOCKS.remove(b);
         LOGGER.debug("Removed position  (" + PROTECTED_BLOCKS.size() + ")");
     }
 
     public static boolean isProtected(BlockPos b){
-        for (BlockPos prot : PROTECTED_BLOCKS){
+        for (DimensionAwareBlockPosition prot : PROTECTED_BLOCKS){
 
-            if (getDistance(b,prot)<32){
+            if (getDistance(b,prot.position)<32){
                 return true;
             }
         }
@@ -132,14 +132,14 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
         lazyItemHandler = LazyOptional.of(() -> itemHandler);
 
         if(!this.level.isClientSide()) {
-            registerPosition(this.worldPosition,this.level);
+            registerPosition(new DimensionAwareBlockPosition(this.worldPosition,this.level.dimensionType()));
         }
     }
 
     @Override
     public void onChunkUnloaded() {
         if(!this.level.isClientSide()) {
-            removePosition(this.worldPosition,this.level);
+            removePosition(new DimensionAwareBlockPosition(this.worldPosition,this.level.dimensionType()));
         }
         super.onChunkUnloaded();
     }
@@ -173,9 +173,10 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, ProtectionBlockEntity pBlockEntity) {
+
         if (pBlockEntity.progress==0 && pBlockEntity.protectionEventFired==false)
             if(!pBlockEntity.level.isClientSide()) {
-                removePosition(pPos, pBlockEntity.level);
+                removePosition(new DimensionAwareBlockPosition(pPos,pLevel.dimensionType()));
                 pBlockEntity.protectionEventFired=true;
             }
 
@@ -185,7 +186,7 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
         }
         if (burnItem(pBlockEntity))
             if(!pBlockEntity.level.isClientSide()) {
-                registerPosition(pPos, pBlockEntity.level);
+                registerPosition(new DimensionAwareBlockPosition(pPos,pLevel.dimensionType()));
                 pBlockEntity.protectionEventFired=false;
             }
 
