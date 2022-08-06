@@ -5,7 +5,6 @@ import net.acamilo.decayingworldmod.block.ModBlocks;
 import net.acamilo.decayingworldmod.block.entity.ModBlockEntities;
 import net.acamilo.decayingworldmod.item.ModItems;
 import net.acamilo.decayingworldmod.screen.ModMenuTypes;
-import net.acamilo.decayingworldmod.screen.ProtectionBlockMenu;
 import net.acamilo.decayingworldmod.screen.ProtectionBlockScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,6 +32,8 @@ public class DecayingWorldMod
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
 
+        MinecraftForge.EVENT_BUS.register(new DecaySpawnEventHandler());
+
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
@@ -51,6 +52,8 @@ public class DecayingWorldMod
     {
 
     }
+
+
 
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
