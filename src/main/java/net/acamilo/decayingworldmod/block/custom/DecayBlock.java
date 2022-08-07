@@ -64,7 +64,7 @@ public class DecayBlock extends Block {
         }
     }
     protected int spreadDelay() {
-        return 20+(int)(Math.random()*5000);
+        return 20+(int)(Math.random()*50);
     }
 
 

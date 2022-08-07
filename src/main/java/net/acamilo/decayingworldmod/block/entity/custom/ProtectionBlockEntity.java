@@ -80,18 +80,18 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
 
     public static void registerPosition(DimensionAwareBlockPosition b){
         PROTECTED_BLOCKS.add(b);
-        LOGGER.debug("Added position  (" + PROTECTED_BLOCKS.size() + ")");
+        LOGGER.debug("Added position ["+b.position+" "+b.level.effectsLocation().getPath()+"] (" + PROTECTED_BLOCKS.size() + ")");
     }
 
     public static void removePosition(DimensionAwareBlockPosition b){
         PROTECTED_BLOCKS.remove(b);
-        LOGGER.debug("Removed position  (" + PROTECTED_BLOCKS.size() + ")");
+        LOGGER.debug("Removed position "+b.position+" "+b.level.effectsLocation().getPath()+" (" + PROTECTED_BLOCKS.size() + ")");
     }
 
     public static boolean isProtected(BlockPos b, LevelAccessor l){
         for (DimensionAwareBlockPosition prot : PROTECTED_BLOCKS){
 
-            if (getDistance(b,prot.position)<32 && prot.level.equals(l)){
+            if (getDistance(b,prot.position)<32 && prot.level.equals(l.dimensionType())){
                 return true;
             }
         }
