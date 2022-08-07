@@ -35,6 +35,7 @@ public class DecayingWorldMod
         ModMenuTypes.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(new DecaySpawnEventHandler());
+        //MinecraftForge.EVENT_BUS.register(new DecayingWorldChunkModifier());
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);

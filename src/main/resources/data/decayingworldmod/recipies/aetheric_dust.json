@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "copper_ingot",
+  "ingredients": [
+    {
+      "item": "decayingworldmod:aether_crystal"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "decayingworldmod:aetheric_dust"
+  }
+}
