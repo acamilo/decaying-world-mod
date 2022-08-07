@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "copper_ingot",
   "ingredients": [
     {
       "item": "decayingworldmod:aether_crystal"

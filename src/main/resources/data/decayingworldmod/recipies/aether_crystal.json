@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "decayingworldmod:aetheric_dust"
+      "item": "decayingworldmod:aether_dust"
     }
   },
   "pattern": [
