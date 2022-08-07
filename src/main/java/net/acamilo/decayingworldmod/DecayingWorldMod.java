@@ -6,6 +6,8 @@ import net.acamilo.decayingworldmod.block.entity.ModBlockEntities;
 import net.acamilo.decayingworldmod.item.ModItems;
 import net.acamilo.decayingworldmod.screen.ModMenuTypes;
 import net.acamilo.decayingworldmod.screen.ProtectionBlockScreen;
+import net.acamilo.decayingworldmod.world.feature.ModConfiguredFeatures;
+import net.acamilo.decayingworldmod.world.feature.ModPlacedFeatures;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -31,8 +33,12 @@ public class DecayingWorldMod
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, DecayingWorldOptionsHolder.COMMON_SPEC);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+
+        ModConfiguredFeatures.register(modEventBus);
+        ModPlacedFeatures.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(new DecaySpawnEventHandler());
         //MinecraftForge.EVENT_BUS.register(new DecayingWorldChunkModifier());

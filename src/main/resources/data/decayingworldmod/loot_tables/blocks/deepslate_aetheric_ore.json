@@ -24,7 +24,7 @@
                   }
                 }
               ],
-              "name": "decayingworldmod:aether_ore"
+              "name": "decayingworldmod:deepslate_aether_ore"
             },
             {
               "type": "minecraft:item",
@@ -43,7 +43,7 @@
           ]
         }
       ],
-      "rolls": 1.0
+      "rolls": 2.0
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "decayingworldmod:block/aetheric_ore"
+    "all": "decayingworldmod:block/aether_ore"
   }
 }

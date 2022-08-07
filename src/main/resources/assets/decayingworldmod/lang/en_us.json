@@ -5,6 +5,7 @@
   "itemGroup.decayingworldmodtab": "Decaying World Tab",
   "item.decayingworldmod.aether_crystal" : "Aether Crystal",
   "block.decayingworldmod.protection_block" : "Protection Block",
-  "block.decayingworldmod.aetheric_ore": "Aetheric Ore",
+  "block.decayingworldmod.aether_ore": "Aetheric Ore",
+  "block.decayingworldmod.deepslate_aether_ore": "Deepslate Aetheric Ore",
   "item.decayingworldmod.aether_dust": "Aetheric Dust"
 }
