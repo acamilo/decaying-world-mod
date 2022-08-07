@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
   "biomes": "#minecraft:is_overworld",
-  "features": "tutorialmod:aether_ore_placed",
+  "features": "decayingworldmod:aether_ore_place",
   "step": "underground_ores"
 }

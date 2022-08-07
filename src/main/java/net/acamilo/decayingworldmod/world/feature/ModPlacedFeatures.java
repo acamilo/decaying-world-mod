@@ -14,10 +14,12 @@ public class ModPlacedFeatures {
     public static final DeferredRegister<PlacedFeature> PLACED_FEATURES =
             DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, DecayingWorldMod.MOD_ID);
 
-    public static final RegistryObject<PlacedFeature> AETHER_ORE_PLACED = PLACED_FEATURES.register("aether_ore_placed",
+
+    public static final RegistryObject<PlacedFeature> ZIRCON_ORE_PLACED = PLACED_FEATURES.register("aether_ore_placed",
             () -> new PlacedFeature(ModConfiguredFeatures.AETHER_ORE.getHolder().get(),
                     commonOrePlacement(7, // VeinsPerChunk
                             HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80)))));
+
 
     public static List<PlacementModifier> orePlacement(PlacementModifier p_195347_, PlacementModifier p_195348_) {
         return List.of(p_195347_, InSquarePlacement.spread(), p_195348_, BiomeFilter.biome());
