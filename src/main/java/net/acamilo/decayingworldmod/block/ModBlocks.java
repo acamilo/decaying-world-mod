@@ -24,6 +24,9 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, DecayingWorldMod.MOD_ID);
 
+    public static final RegistryObject<Block> AETHERIC_ORE = registerBlock("aetheric_ore",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL)
+                    .strength(9f).requiresCorrectToolForDrops()),ModCreativeModeTab.DECAYING_WORLD_MOD_TAB);
 
     public static final RegistryObject<Block> DECAY_BLOCK = registerBlock("decay_block",
             () -> new DecayBlock(BlockBehaviour.Properties.of(Material.STONE).randomTicks()), ModCreativeModeTab.DECAYING_WORLD_MOD_TAB);

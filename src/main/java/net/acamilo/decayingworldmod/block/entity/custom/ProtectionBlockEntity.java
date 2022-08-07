@@ -19,7 +19,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -196,7 +195,7 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private static boolean burnItem(ProtectionBlockEntity entity){
-        boolean hasItemInSlot = entity.itemHandler.getStackInSlot(0).getItem() == ModItems.AETHER_DUST.get();
+        boolean hasItemInSlot = entity.itemHandler.getStackInSlot(0).getItem() == ModItems.AETHER_CRYSTAL.get();
         if (hasItemInSlot && entity.progress==0){
             entity.itemHandler.extractItem(0, 1, false);
             entity.progress= entity.maxProgress;

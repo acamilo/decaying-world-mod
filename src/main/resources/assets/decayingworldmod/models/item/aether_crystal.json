@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "decayingworldmod:item/aether_dust"
+    "layer0": "decayingworldmod:item/aether_crystal"
   }
 }

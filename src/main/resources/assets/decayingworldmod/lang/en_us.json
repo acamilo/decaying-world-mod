@@ -3,6 +3,7 @@
   "block.decayingworldmod.fast_decay_block" : "Fast Decay Block",
   "block.decayingworldmod.decay_sand_block" : "Decay Sand Block",
   "itemGroup.decayingworldmodtab": "Decaying World Tab",
-  "item.decayingworldmod.aether_dust" : "Aether Dust",
-  "block.decayingworldmod.protection_block" : "Protection Block"
+  "item.decayingworldmod.aether_crystal" : "Aether Crystal",
+  "block.decayingworldmod.protection_block" : "Protection Block",
+  "block.decayingworldmod.aetheric_ore": "Aetheric Ore"
 }
