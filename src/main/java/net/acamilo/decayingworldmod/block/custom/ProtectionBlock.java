@@ -44,7 +44,7 @@ public class ProtectionBlock extends BaseEntityBlock {
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos blockPos, Player player, boolean willHarvest, FluidState fluid) {
         if(!level.isClientSide()) {
-            ProtectionBlockEntity.removePosition(new DimensionAwareBlockPosition(blockPos, level.dimensionType()));
+            ProtectionBlockEntity.removePosition(new DimensionAwareBlockPosition(blockPos, level.dimension()));
         }
         return super.onDestroyedByPlayer(state, level, blockPos, player, willHarvest, fluid);
     }

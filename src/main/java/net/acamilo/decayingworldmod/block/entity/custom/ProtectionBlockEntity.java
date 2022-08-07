@@ -1,6 +1,7 @@
 package net.acamilo.decayingworldmod.block.entity.custom;
 
 import com.mojang.logging.LogUtils;
+import net.acamilo.decayingworldmod.DecayingWorldOptionsHolder;
 import net.acamilo.decayingworldmod.block.entity.ModBlockEntities;
 import net.acamilo.decayingworldmod.item.ModItems;
 import net.acamilo.decayingworldmod.screen.ProtectionBlockMenu;
@@ -9,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -38,7 +40,7 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
     public static HashSet<DimensionAwareBlockPosition> PROTECTED_BLOCKS = new HashSet<DimensionAwareBlockPosition>();
     protected final ContainerData data;
     private int progress = 0;
-    private int maxProgress = 300;//3600*20;
+    int maxProgress = DecayingWorldOptionsHolder.COMMON.PROTECTION_RESOURCE_BURN_TIME.get();
 
     private boolean protectionEventFired = false;
     private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
@@ -80,18 +82,17 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
 
     public static void registerPosition(DimensionAwareBlockPosition b){
         PROTECTED_BLOCKS.add(b);
-        LOGGER.debug("Added position ["+b.position+" "+b.level.effectsLocation().getPath()+"] (" + PROTECTED_BLOCKS.size() + ")");
+        LOGGER.debug("Added position ["+b.position+" "+b.level+"] (" + PROTECTED_BLOCKS.size() + ")");
     }
 
     public static void removePosition(DimensionAwareBlockPosition b){
         PROTECTED_BLOCKS.remove(b);
-        LOGGER.debug("Removed position "+b.position+" "+b.level.effectsLocation().getPath()+" (" + PROTECTED_BLOCKS.size() + ")");
+        LOGGER.debug("Removed position "+b.position+" "+b.level+" (" + PROTECTED_BLOCKS.size() + ")");
     }
 
-    public static boolean isProtected(BlockPos b, LevelAccessor l){
+    public static boolean isProtected(BlockPos b, ResourceKey<Level> l){
         for (DimensionAwareBlockPosition prot : PROTECTED_BLOCKS){
-
-            if (getDistance(b,prot.position)<32 && prot.level.equals(l.dimensionType())){
+            if (getDistance(b,prot.position)<DecayingWorldOptionsHolder.COMMON.PROTECTION_BLOCK_PROTECTION_RADIUS.get() && prot.level.equals(l)){
                 return true;
             }
         }
@@ -133,14 +134,14 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
         lazyItemHandler = LazyOptional.of(() -> itemHandler);
 
         if(!this.level.isClientSide()) {
-            registerPosition(new DimensionAwareBlockPosition(this.worldPosition,this.level.dimensionType()));
+            registerPosition(new DimensionAwareBlockPosition(this.worldPosition,this.level.dimension()));
         }
     }
 
     @Override
     public void onChunkUnloaded() {
         if(!this.level.isClientSide()) {
-            removePosition(new DimensionAwareBlockPosition(this.worldPosition,this.level.dimensionType()));
+            removePosition(new DimensionAwareBlockPosition(this.worldPosition,this.level.dimension()));
         }
         super.onChunkUnloaded();
     }
@@ -177,7 +178,7 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
 
         if (pBlockEntity.progress==0 && pBlockEntity.protectionEventFired==false)
             if(!pBlockEntity.level.isClientSide()) {
-                removePosition(new DimensionAwareBlockPosition(pPos,pLevel.dimensionType()));
+                removePosition(new DimensionAwareBlockPosition(pPos,pLevel.dimension()));
                 pBlockEntity.protectionEventFired=true;
             }
 
@@ -187,7 +188,7 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
         }
         if (burnItem(pBlockEntity))
             if(!pBlockEntity.level.isClientSide()) {
-                registerPosition(new DimensionAwareBlockPosition(pPos,pLevel.dimensionType()));
+                registerPosition(new DimensionAwareBlockPosition(pPos,pLevel.dimension()));
                 pBlockEntity.protectionEventFired=false;
             }
 

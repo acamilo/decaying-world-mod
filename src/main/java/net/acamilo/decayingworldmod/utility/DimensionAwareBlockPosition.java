@@ -1,13 +1,15 @@
 package net.acamilo.decayingworldmod.utility;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 
 public class DimensionAwareBlockPosition {
     public BlockPos position;
-    public DimensionType level;
+    public ResourceKey<Level> level;
 
-    public DimensionAwareBlockPosition(BlockPos p, DimensionType l) {
+    public DimensionAwareBlockPosition(BlockPos p, ResourceKey<Level> l) {
         position = p;
         level = l;
     }

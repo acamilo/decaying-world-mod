@@ -13,9 +13,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
 
-public class DecayBlock extends Block {
+public class FastDecayBlock extends Block {
     private static final Logger LOGGER = LogUtils.getLogger();
-    public DecayBlock(Properties properties) {
+    public FastDecayBlock(Properties properties) {
         super(properties);
 
     }
@@ -32,6 +32,7 @@ public class DecayBlock extends Block {
 
     @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos pos, RandomSource source) {
+        LOGGER.debug("Fast decay block tick");
         BlockPos neighbors[] = {
                 pos.above(),
                 pos.below(),
@@ -40,36 +41,38 @@ public class DecayBlock extends Block {
                 pos.north(),
                 pos.south()
         };
-
-        //LOGGER.debug("Player Dim:\t"+serverLevel.dimensionType());
         // do not spread if block is protected
         if (ProtectionBlockEntity.isProtected(pos,serverLevel.dimension())){
-            serverLevel.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            serverLevel.setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
             return;
         }
 
         // replace self with decay sand
 
-        if (source.nextDouble()>DecayingWorldOptionsHolder.COMMON.DECAY_BLOCK_SAND_CHANCE.get())
+        if (source.nextDouble()>0.05)
             serverLevel.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         else
             serverLevel.setBlockAndUpdate(pos, ModBlocks.DECAY_SAND_BLOCK.get().defaultBlockState());
 
-        BlockState bs = ModBlocks.DECAY_BLOCK.get().defaultBlockState();
+
         for (BlockPos b : neighbors){
             BlockState block = serverLevel.getBlockState(b);
             if (block.isAir()==false){
                 if(!(block.is(ModBlocks.DECAY_BLOCK.get()) || block.is(ModBlocks.FAST_DECAY_BLOCK.get()) || block.is(ModBlocks.DECAY_SAND_BLOCK.get()))) {
-                    if (!block.is(Blocks.WATER))
-                        serverLevel.setBlockAndUpdate(b, bs);
+                    if (!block.is(Blocks.WATER)){
+                        LOGGER.debug("Fast decay block place");
+                        if (source.nextDouble()>DecayingWorldOptionsHolder.COMMON.FAST_DECAY_BLOCK_SPAWN_CHANCE.get())
+                            serverLevel.setBlockAndUpdate(b, ModBlocks.DECAY_BLOCK.get().defaultBlockState());
+                        else
+                            serverLevel.setBlockAndUpdate(b, ModBlocks.FAST_DECAY_BLOCK.get().defaultBlockState());
+                    }
                 }
             }
         }
     }
 
-
     protected int spreadDelay() {
-        return (int)(Math.random()* DecayingWorldOptionsHolder.COMMON.DECAY_BLOCK_SPREAD_DELAY.get());
+        return DecayingWorldOptionsHolder.COMMON.FAST_DECAY_BLOCK_SPREAD_DELAY.get();
     }
 
 

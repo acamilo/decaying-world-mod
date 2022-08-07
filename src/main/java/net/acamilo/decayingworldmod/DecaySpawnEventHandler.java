@@ -77,15 +77,22 @@ public class DecaySpawnEventHandler
     private static int counter = 0;
     @SubscribeEvent
     public void onWorldTickEvent(TickEvent.PlayerTickEvent event){
+        if (event.player.level.isClientSide)
+            return;
         if (counter>0) {
             counter--;
             return;
         }
 
         counter = 20*60;
-
         Player player = event.player;
         BlockPos playerbock = player.getOnPos();
+
+        LOGGER.debug("Protection list size:\t"+ProtectionBlockEntity.PROTECTED_BLOCKS.size());
+        LOGGER.debug("IsClientSide:\t"+String.valueOf(event.player.level.isClientSide));
+        LOGGER.debug("Player Level:\t"+player.level);
+        LOGGER.debug("Player Dim:\t"+player.level.dimensionType());
+
 
         int rx = ThreadLocalRandom.current().nextInt(
                 playerbock.getX()-COURRUPTION_RADIUS,
@@ -99,11 +106,11 @@ public class DecaySpawnEventHandler
         BlockPos target = new BlockPos(rx,ry,rz);
         BlockState state = player.level.getBlockState(target);
         if (state!=null && !state.isAir()){
-            if (ProtectionBlockEntity.isProtected(target,player.level)){
+            if (ProtectionBlockEntity.isProtected(target,player.level.dimension())){
                 LOGGER.debug("Courrupting "+target);
-                player.getLevel().setBlockAndUpdate(new BlockPos(rx,ry,rz), ModBlocks.DECAY_BLOCK.get().defaultBlockState());
+                player.getLevel().setBlockAndUpdate(new BlockPos(rx,ry,rz), ModBlocks.FAST_DECAY_BLOCK.get().defaultBlockState());
             } else {
-                LOGGER.debug(target+" is protected");
+                LOGGER.debug(target+" in "+ player.level +" is protected");
             }
         } else {
             LOGGER.debug(target+" is air");
