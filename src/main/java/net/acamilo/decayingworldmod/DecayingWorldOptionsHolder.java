@@ -11,7 +11,7 @@ public class DecayingWorldOptionsHolder
         private static final int defaultInt1 = 37;
         private static final boolean defaultBool1 = true;
 
-        private static int default_DECAY_BLOCK_SPREAD_DELAY = 600;
+        private static int default_DECAY_BLOCK_SPREAD_DELAY = 1000;
         public final ForgeConfigSpec.ConfigValue<Integer> DECAY_BLOCK_SPREAD_DELAY;
         private static int default_FAST_DECAY_BLOCK_SPREAD_DELAY = 5;
         public final ForgeConfigSpec.ConfigValue<Integer> FAST_DECAY_BLOCK_SPREAD_DELAY;
@@ -51,12 +51,12 @@ public class DecayingWorldOptionsHolder
             this.PROTECTION_RESOURCE_BURN_TIME = builder.comment(
                             "Number of ticks it takes for a protection block to consume a crystal")
                     .worldRestart()
-                    .defineInRange("Decay block spread delay", default_PROTECTION_RESOURCE_BURN_TIME, 1, 1000000);
+                    .defineInRange("Protection Resource Burn Time", default_PROTECTION_RESOURCE_BURN_TIME, 1, 1000000);
 
             this.PROTECTION_BLOCK_PROTECTION_RADIUS = builder.comment(
                             "Number of ticks it takes for a protection block to consume a crystal")
                     .worldRestart()
-                    .defineInRange("Decay block spread delay", default_PROTECTION_BLOCK_PROTECTION_RADIUS, 1, 1024);
+                    .defineInRange("Protection block protection radius", default_PROTECTION_BLOCK_PROTECTION_RADIUS, 1, 1024);
             builder.pop();
         }
     }

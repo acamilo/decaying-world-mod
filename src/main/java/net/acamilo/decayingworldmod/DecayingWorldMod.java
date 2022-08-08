@@ -45,7 +45,7 @@ public class DecayingWorldMod
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::clientSetup);
+        //modEventBus.addListener(this::clientSetup);
 
 
         // Register ourselves for server and other game events we are interested in
@@ -54,7 +54,7 @@ public class DecayingWorldMod
 
     private void clientSetup(final FMLCommonSetupEvent event)
     {
-        MenuScreens.register(ModMenuTypes.PROTECTION_BLOCK_MENU.get(), ProtectionBlockScreen::new);
+
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
@@ -72,7 +72,7 @@ public class DecayingWorldMod
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-
+            MenuScreens.register(ModMenuTypes.PROTECTION_BLOCK_MENU.get(), ProtectionBlockScreen::new);
         }
     }
 }

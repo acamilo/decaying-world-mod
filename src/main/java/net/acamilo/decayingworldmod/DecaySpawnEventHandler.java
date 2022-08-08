@@ -114,6 +114,7 @@ public class DecaySpawnEventHandler
             }
         } else {
             LOGGER.debug(target+" is air");
+
         }
 
 
