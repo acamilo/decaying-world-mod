@@ -59,13 +59,13 @@ public class FastDecayBlock extends Block {
             BlockState block = serverLevel.getBlockState(b);
             if (block.isAir()==false){
                 if(!(block.is(ModBlocks.DECAY_BLOCK.get()) || block.is(ModBlocks.FAST_DECAY_BLOCK.get()) || block.is(ModBlocks.DECAY_SAND_BLOCK.get()))) {
-                    if (!block.is(Blocks.WATER)){
-                        LOGGER.debug("Fast decay block place");
+
+                        LOGGER.info("Fast decay block place");
                         if (source.nextDouble()>DecayingWorldOptionsHolder.COMMON.FAST_DECAY_BLOCK_SPAWN_CHANCE.get())
                             serverLevel.setBlockAndUpdate(b, ModBlocks.DECAY_BLOCK.get().defaultBlockState());
                         else
                             serverLevel.setBlockAndUpdate(b, ModBlocks.FAST_DECAY_BLOCK.get().defaultBlockState());
-                    }
+
                 }
             }
         }

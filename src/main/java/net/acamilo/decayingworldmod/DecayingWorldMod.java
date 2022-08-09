@@ -9,6 +9,10 @@ import net.acamilo.decayingworldmod.screen.ProtectionBlockScreen;
 import net.acamilo.decayingworldmod.world.feature.ModConfiguredFeatures;
 import net.acamilo.decayingworldmod.world.feature.ModPlacedFeatures;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -40,7 +44,7 @@ public class DecayingWorldMod
         ModConfiguredFeatures.register(modEventBus);
         ModPlacedFeatures.register(modEventBus);
 
-        MinecraftForge.EVENT_BUS.register(new DecaySpawnEventHandler());
+
         //MinecraftForge.EVENT_BUS.register(new DecayingWorldChunkModifier());
 
         // Register the commonSetup method for modloading
@@ -59,7 +63,11 @@ public class DecayingWorldMod
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
+        MinecraftForge.EVENT_BUS.register(new DecaySpawnEventHandler());
 
+        event.enqueueWork(() -> {
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.AETHER_ROSE.getId(), ModBlocks.POTTED_AETHER_ROSE);
+        });
     }
 
 
@@ -73,6 +81,8 @@ public class DecayingWorldMod
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             MenuScreens.register(ModMenuTypes.PROTECTION_BLOCK_MENU.get(), ProtectionBlockScreen::new);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.AETHER_ROSE.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.POTTED_AETHER_ROSE.get(), RenderType.cutout());
         }
     }
 }

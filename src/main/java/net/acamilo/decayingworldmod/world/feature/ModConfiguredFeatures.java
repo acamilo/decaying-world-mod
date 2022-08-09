@@ -25,7 +25,7 @@ public class ModConfiguredFeatures {
 
 
     public static final RegistryObject<ConfiguredFeature<?, ?>> AETHER_ORE = CONFIGURED_FEATURES.register("aether_ore",
-            () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OVERWORLD_AETHER_ORES.get(),7)));
+            () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OVERWORLD_AETHER_ORES.get(),12)));
 
 
     public static void register(IEventBus eventBus) {

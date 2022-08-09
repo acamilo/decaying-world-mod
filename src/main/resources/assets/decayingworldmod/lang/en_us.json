@@ -7,5 +7,7 @@
   "block.decayingworldmod.protection_block" : "Protection Block",
   "block.decayingworldmod.aether_ore": "Aetheric Ore",
   "block.decayingworldmod.deepslate_aether_ore": "Deepslate Aetheric Ore",
-  "item.decayingworldmod.aether_dust": "Aetheric Dust"
+  "item.decayingworldmod.aether_dust": "Aetheric Dust",
+  "block.decayingworldmod.aether_rose": "Aether Rose",
+  "block.decayingworldmod.potted_aether_rose": "Potted Aether Rose"
 }

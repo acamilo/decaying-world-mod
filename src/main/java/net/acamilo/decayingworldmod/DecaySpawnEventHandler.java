@@ -1,30 +1,29 @@
 package net.acamilo.decayingworldmod;
 
+
 import com.mojang.logging.LogUtils;
 import net.acamilo.decayingworldmod.block.ModBlocks;
 import net.acamilo.decayingworldmod.block.entity.custom.ProtectionBlockEntity;
-import net.acamilo.decayingworldmod.utility.DimensionAwareChunkPosition;
+import net.acamilo.decayingworldmod.utility.DimensionAwareBlockPosition;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.MappedRegistry;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.slf4j.Logger;
 
-import java.util.HashSet;
+import javax.annotation.Nullable;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class DecaySpawnEventHandler
 {
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final int COURRUPTION_RADIUS = 100;
+    private boolean spawnCourruption = DecayingWorldOptionsHolder.COMMON.SPAWN_COURRUPTION_ENABLE.get();
+    private int COURRUPTION_RADIUS = DecayingWorldOptionsHolder.COMMON.DECAY_SPAWN_PLAYER_RADIUS.get();
+    private int SAFE_RADIUS = DecayingWorldOptionsHolder.COMMON.DECAY_SPAWN_SAFE_RADIUS.get();
     /*
     public static HashSet<DimensionAwareChunkPosition> LOADED_CHUNKS = new HashSet<DimensionAwareChunkPosition>();
     public static void addChunkPos(DimensionAwareChunkPosition p){
@@ -84,15 +83,17 @@ public class DecaySpawnEventHandler
             return;
         }
 
-        counter = 20*60;
+        counter = DecayingWorldOptionsHolder.COMMON.DECAY_SPAWN_RATE.get();
         Player player = event.player;
         BlockPos playerbock = player.getOnPos();
+        Level world = player.getLevel();
+        // If we're not in the courruptable area, return
+        if (getDistance(playerbock,world.getSharedSpawnPos())>SAFE_RADIUS) {
+            LOGGER.info("Outside Courruptable area");
+            return;
+        }
 
-        LOGGER.debug("Protection list size:\t"+ProtectionBlockEntity.PROTECTED_BLOCKS.size());
-        LOGGER.debug("IsClientSide:\t"+String.valueOf(event.player.level.isClientSide));
-        LOGGER.debug("Player Level:\t"+player.level);
-        LOGGER.debug("Player Dim:\t"+player.level.dimensionType());
-
+        if (spawnCourruption==false) return;
 
         int rx = ThreadLocalRandom.current().nextInt(
                 playerbock.getX()-COURRUPTION_RADIUS,
@@ -105,15 +106,28 @@ public class DecaySpawnEventHandler
                 playerbock.getZ()+COURRUPTION_RADIUS);
         BlockPos target = new BlockPos(rx,ry,rz);
         BlockState state = player.level.getBlockState(target);
-        if (state!=null && !state.isAir()){
-            if (ProtectionBlockEntity.isProtected(target,player.level.dimension())){
-                LOGGER.debug("Courrupting "+target);
-                player.getLevel().setBlockAndUpdate(new BlockPos(rx,ry,rz), ModBlocks.FAST_DECAY_BLOCK.get().defaultBlockState());
+
+
+        // if we use the isProtected function it stops working on server. idk why
+        if (state!=null){
+            if (!state.isAir()) {
+                LOGGER.info(target+" not air");
+                boolean safe=false;
+                for (DimensionAwareBlockPosition prot : ProtectionBlockEntity.PROTECTED_BLOCKS) {
+                    if (ProtectionBlockEntity.getDistance(target, prot.position) < DecayingWorldOptionsHolder.COMMON.PROTECTION_BLOCK_PROTECTION_RADIUS.get() && prot.level.equals(world)) {
+                       safe=true;
+                    }
+                }
+                if (safe==false){
+                    LOGGER.info("Courrupting " + target);
+                    player.getLevel().setBlockAndUpdate(new BlockPos(rx, ry, rz), ModBlocks.FAST_DECAY_BLOCK.get().defaultBlockState());
+                }
             } else {
-                LOGGER.debug(target+" in "+ player.level +" is protected");
+                LOGGER.info(target+" is air");
             }
         } else {
-            LOGGER.debug(target+" is air");
+            LOGGER.info(target+" is null");
+
 
         }
 
@@ -128,5 +142,13 @@ public class DecaySpawnEventHandler
         //
         //event.
         //LOGGER.debug("Server Tick Event!");
+    }
+
+    private static double getDistance(BlockPos a, BlockPos b){
+        double deltaX = a.getX() - b.getX();
+        double deltaY = a.getY() - b.getY();
+        double deltaZ = a.getZ() - b.getZ();
+
+        return Math.sqrt((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ));
     }
 }

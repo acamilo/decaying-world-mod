@@ -44,7 +44,7 @@ public class DecayBlock extends Block {
         //LOGGER.debug("Player Dim:\t"+serverLevel.dimensionType());
         // do not spread if block is protected
         if (ProtectionBlockEntity.isProtected(pos,serverLevel.dimension())){
-            serverLevel.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            serverLevel.setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
             return;
         }
 

@@ -79,17 +79,20 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
         };
     }
 
-    public static void registerPosition(DimensionAwareBlockPosition b){
+    public static synchronized void registerPosition(DimensionAwareBlockPosition b){
         PROTECTED_BLOCKS.add(b);
         LOGGER.debug("Added position ["+b.position+" "+b.level+"] (" + PROTECTED_BLOCKS.size() + ")");
     }
 
-    public static void removePosition(DimensionAwareBlockPosition b){
+    public static synchronized void removePosition(DimensionAwareBlockPosition b){
         PROTECTED_BLOCKS.remove(b);
         LOGGER.debug("Removed position "+b.position+" "+b.level+" (" + PROTECTED_BLOCKS.size() + ")");
     }
 
-    public static boolean isProtected(BlockPos b, ResourceKey<Level> l){
+    public static synchronized boolean isProtected(BlockPos b, ResourceKey<Level> l){
+
+        LOGGER.info("Protection check "+b+" "+l);
+        if (PROTECTED_BLOCKS.size()==0) return false;
         for (DimensionAwareBlockPosition prot : PROTECTED_BLOCKS){
             if (getDistance(b,prot.position)<DecayingWorldOptionsHolder.COMMON.PROTECTION_BLOCK_PROTECTION_RADIUS.get() && prot.level.equals(l)){
                 return true;
@@ -98,7 +101,7 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
         return false;
     }
 
-    private static double getDistance(BlockPos a, BlockPos b){
+    public static double getDistance(BlockPos a, BlockPos b){
         double deltaX = a.getX() - b.getX();
         double deltaY = a.getY() - b.getY();
         double deltaZ = a.getZ() - b.getZ();
