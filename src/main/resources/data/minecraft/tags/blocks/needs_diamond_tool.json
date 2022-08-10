@@ -1,5 +1,7 @@
 {
   "values": [
-    "decayingworldmod:aether_ore"
+    "decayingworldmod:aether_ore",
+    "decayingworldmod:deepslate_aether_ore",
+    "decayingworldmod:nether_aether_ore"
   ]
 }
