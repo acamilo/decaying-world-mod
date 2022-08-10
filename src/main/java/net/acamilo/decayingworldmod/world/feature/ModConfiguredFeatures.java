@@ -30,12 +30,14 @@ public class ModConfiguredFeatures {
     public static final Supplier<List<OreConfiguration.TargetBlockState>> OVERWORLD_AETHER_ORES = Suppliers.memoize(() -> List.of(
             OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, ModBlocks.AETHER_ORE.get().defaultBlockState()),
             OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, ModBlocks.DEEPSLATE_AETHER_ORE.get().defaultBlockState())));
-
+    public static final Supplier<List<OreConfiguration.TargetBlockState>> NETHER_AETHER_ORES = Suppliers.memoize(() -> List.of(
+            OreConfiguration.target(OreFeatures.NETHER_ORE_REPLACEABLES, ModBlocks.NETHER_AETHER_ORE.get().defaultBlockState())));
 
     public static final RegistryObject<ConfiguredFeature<?, ?>> AETHER_ORE = CONFIGURED_FEATURES.register("aether_ore",
             () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OVERWORLD_AETHER_ORES.get(),12)));
 
-
+    public static final RegistryObject<ConfiguredFeature<?, ?>> NETHER_AETHER_ORE = CONFIGURED_FEATURES.register("nether_aether_ore",
+            () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(NETHER_AETHER_ORES.get(), 9)));
 
 
 
