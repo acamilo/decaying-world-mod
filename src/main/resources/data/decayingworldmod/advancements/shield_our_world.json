@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "decayingworldmod:protection_block"
+    },
+    "title": "Expand our Domain",
+    "description": "With this we push the darkness back.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "decayingworldmod:save_the_world",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "decayingworldmod:protection_block"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

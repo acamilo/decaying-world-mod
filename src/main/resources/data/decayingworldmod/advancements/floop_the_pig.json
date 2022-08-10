@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:porkchop"
+    },
+    "title": "Floop the Pig",
+    "description": "you did it!",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "decayingworldmod:decayingworldmod",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "decayingworldmod:aether_dust_from_porkchop"
+      }
+    }
+  }
+}

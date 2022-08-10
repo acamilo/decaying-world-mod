@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "decayingworldmod:aether_rose"
+    }
+  ],
+  "result": {
+    "item": "decayingworldmod:aether_crystal",
+    "count": 1
+  }
+}

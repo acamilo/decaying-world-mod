@@ -2,6 +2,7 @@ package net.acamilo.decayingworldmod.block.entity.custom;
 
 import com.mojang.logging.LogUtils;
 import net.acamilo.decayingworldmod.DecayingWorldOptionsHolder;
+import net.acamilo.decayingworldmod.block.custom.ProtectionBlock;
 import net.acamilo.decayingworldmod.block.entity.ModBlockEntities;
 import net.acamilo.decayingworldmod.item.ModItems;
 import net.acamilo.decayingworldmod.screen.ProtectionBlockMenu;
@@ -91,7 +92,7 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
 
     public static synchronized boolean isProtected(BlockPos b, ResourceKey<Level> l){
 
-        LOGGER.info("Protection check "+b+" "+l);
+        //LOGGER.info("Protection check "+b+" "+l);
         if (PROTECTED_BLOCKS.size()==0) return false;
         for (DimensionAwareBlockPosition prot : PROTECTED_BLOCKS){
             if (getDistance(b,prot.position)<DecayingWorldOptionsHolder.COMMON.PROTECTION_BLOCK_PROTECTION_RADIUS.get() && prot.level.equals(l)){
@@ -176,21 +177,23 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
 
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
-    public static void tick(Level pLevel, BlockPos pPos, BlockState pState, ProtectionBlockEntity pBlockEntity) {
+    public static void tick(Level level, BlockPos pos, BlockState state, ProtectionBlockEntity pBlockEntity) {
 
         if (pBlockEntity.progress==0 && pBlockEntity.protectionEventFired==false)
             if(!pBlockEntity.level.isClientSide()) {
-                removePosition(new DimensionAwareBlockPosition(pPos,pLevel.dimension()));
+                removePosition(new DimensionAwareBlockPosition(pos,level.dimension()));
+                level.setBlock(pos,state.setValue(ProtectionBlock.LIT,Boolean.valueOf(false)),3);
                 pBlockEntity.protectionEventFired=true;
             }
 
         if (pBlockEntity.progress>0){
             pBlockEntity.progress--;
-            setChanged(pLevel,pPos,pState);
+            setChanged(level,pos,state);
         }
         if (burnItem(pBlockEntity))
             if(!pBlockEntity.level.isClientSide()) {
-                registerPosition(new DimensionAwareBlockPosition(pPos,pLevel.dimension()));
+                registerPosition(new DimensionAwareBlockPosition(pos,level.dimension()));
+                level.setBlock(pos,state.setValue(ProtectionBlock.LIT,Boolean.valueOf(true)),3);
                 pBlockEntity.protectionEventFired=false;
             }
 

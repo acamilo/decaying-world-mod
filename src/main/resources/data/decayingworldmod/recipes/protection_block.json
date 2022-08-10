@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#B#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:redstone_lamp"
+    },
+    "B": {
+      "item": "decayingworldmod:aether_crystal"
+    }
+  },
+  "result": {
+    "item": "decayingworldmod:protection_block",
+    "count": 1
+  }
+}

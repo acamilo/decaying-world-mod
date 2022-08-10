@@ -33,7 +33,7 @@ public class ProtectionBlockMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler, 0, 80, 60));
+            this.addSlot(new SlotItemHandler(handler, 0, 80, 34));
             //this.addSlot(new SlotItemHandler(handler, 1, 57, 18));
             //this.addSlot(new SlotItemHandler(handler, 2, 103, 18));
             //this.addSlot(new ModResultSlot(handler, 3, 80, 60));
