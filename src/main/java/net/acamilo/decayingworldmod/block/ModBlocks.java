@@ -42,6 +42,10 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.of(Material.METAL)
                     .strength(9f).requiresCorrectToolForDrops()),ModCreativeModeTab.DECAYING_WORLD_MOD_TAB);
 
+    public static final RegistryObject<Block> NETHER_AETHER_ORE = registerBlock("nether_aether_ore",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL)
+                    .strength(9f).requiresCorrectToolForDrops()),ModCreativeModeTab.DECAYING_WORLD_MOD_TAB);
+
     public static final RegistryObject<Block> DECAY_BLOCK = registerBlock("decay_block",
             () -> new DecayBlock(BlockBehaviour.Properties.of(Material.STONE).randomTicks()), ModCreativeModeTab.DECAYING_WORLD_MOD_TAB);
     public static final RegistryObject<Block> FAST_DECAY_BLOCK = registerBlock("fast_decay_block",
