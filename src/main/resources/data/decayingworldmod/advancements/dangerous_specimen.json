@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "decayingworldmod:decay_sand_block"
+    },
+    "title": "Dangerous, But Usefull?",
+    "description": "This stuff DOES eat through every known substance.",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "decayingworldmod:save_the_world",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "decayingworldmod:decay_sand_block"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

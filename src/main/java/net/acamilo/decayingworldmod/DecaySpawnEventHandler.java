@@ -4,18 +4,24 @@ package net.acamilo.decayingworldmod;
 import com.mojang.logging.LogUtils;
 import net.acamilo.decayingworldmod.block.ModBlocks;
 import net.acamilo.decayingworldmod.block.entity.custom.ProtectionBlockEntity;
+import net.acamilo.decayingworldmod.item.ModItems;
 import net.acamilo.decayingworldmod.utility.DimensionAwareBlockPosition;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.items.ItemHandlerHelper;
 import org.slf4j.Logger;
 
-import javax.annotation.Nullable;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class DecaySpawnEventHandler
@@ -73,6 +79,32 @@ public class DecaySpawnEventHandler
         }
     }
 */
+
+    @SubscribeEvent
+    public void blockPlacedEvent(BlockEvent.EntityPlaceEvent event){
+        if (event.getEntity() instanceof ServerPlayer == false) return;
+
+
+
+        ServerPlayer player = (ServerPlayer) event.getEntity();
+        BlockPos spawn = player.level.getSharedSpawnPos();
+        BlockPos player_pos = player.getOnPos();
+        // if in safe zone, can place beds
+        if (getDistance(spawn,player_pos)<DecayingWorldOptionsHolder.COMMON.DECAY_SPAWN_PLAYER_RADIUS.get()) return;
+
+        Block block = event.getPlacedBlock().getBlock();
+
+
+        if (block instanceof BedBlock && DecayingWorldOptionsHolder.COMMON.BEDS_EXPLODE.get()){
+            player.level.setBlock(event.getPos(), Blocks.AIR.defaultBlockState(),0);
+            Explosion.BlockInteraction explosion$blockinteraction = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(player.level, player) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
+            player.level.explode(player, player.getX(), player.getY(), player.getZ(), 3.0F, explosion$blockinteraction);
+            ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(ModItems.CHARRED_PILLOW.get()));
+        }
+        LOGGER.info("Bed placed by player");
+
+
+    }
     private static int counter = 0;
     @SubscribeEvent
     public void onWorldTickEvent(TickEvent.PlayerTickEvent event){
@@ -142,6 +174,8 @@ public class DecaySpawnEventHandler
         //
         //event.
         //LOGGER.debug("Server Tick Event!");
+
+
     }
 
     private static double getDistance(BlockPos a, BlockPos b){

@@ -13,6 +13,10 @@ public class ModItems {
     public static final RegistryObject<Item> AETHER_CRYSTAL = ITEMS.register("aether_crystal",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.DECAYING_WORLD_MOD_TAB)));
 
+    public static final RegistryObject<Item> CHARRED_PILLOW = ITEMS.register("charred_pillow",
+            () -> new Item(new Item.Properties().tab(ModCreativeModeTab.DECAYING_WORLD_MOD_TAB)));
+
+
     public static final RegistryObject<Item> AETHER_DUST = ITEMS.register("aether_dust",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.DECAYING_WORLD_MOD_TAB)));
 

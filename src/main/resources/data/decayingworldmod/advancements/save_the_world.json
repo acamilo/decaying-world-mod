@@ -1,0 +1,27 @@
+{
+  "display": {
+    "icon": {
+      "item": "decayingworldmod:aether_crystal"
+    },
+    "title": "How we survive!",
+    "description": "This is how we save everyone! This is how we push back the darkness.",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "decayingworldmod:decayingworldmod",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "decayingworldmod:aether_crystal"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "display": {
+    "icon": {
+      "item": "decayingworldmod:aether_dust"
+    },
+    "title": "Decaying World",
+    "description": "Do not go gentile into that good night. Rage, rage, against the dying of the light",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "background": "decayingworldmod:textures/block/aether_ore.png"
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "decayingworldmod:aether_dust"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

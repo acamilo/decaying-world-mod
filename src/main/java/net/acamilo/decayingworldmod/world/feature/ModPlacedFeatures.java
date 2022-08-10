@@ -1,7 +1,9 @@
 package net.acamilo.decayingworldmod.world.feature;
 
 import net.acamilo.decayingworldmod.DecayingWorldMod;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -15,10 +17,10 @@ public class ModPlacedFeatures {
             DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, DecayingWorldMod.MOD_ID);
 
 
-    public static final RegistryObject<PlacedFeature> ZIRCON_ORE_PLACED = PLACED_FEATURES.register("aether_ore_placed",
+    public static final RegistryObject<PlacedFeature> AETHER_ORE_PLACED = PLACED_FEATURES.register("aether_ore_placed",
             () -> new PlacedFeature(ModConfiguredFeatures.AETHER_ORE.getHolder().get(),
                     commonOrePlacement(7, // VeinsPerChunk
-                            HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80)))));
+                            HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(120)))));
 
 
     public static List<PlacementModifier> orePlacement(PlacementModifier p_195347_, PlacementModifier p_195348_) {

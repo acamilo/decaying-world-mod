@@ -32,7 +32,10 @@ public class DecayingWorldOptionsHolder
     public final ForgeConfigSpec.ConfigValue<Integer> DECAY_SPAWN_SAFE_RADIUS;
 
 
+    private static int DEFAULT_SPAWN_ZONE_RADIUS = 500;
 
+    private static boolean DEFAULT_BEDS_EXPLODE = true;
+    public final ForgeConfigSpec.ConfigValue<Boolean> BEDS_EXPLODE;
     //
     private static int default_DECAY_SPAWN_RATE = 20*120;
     public final ForgeConfigSpec.ConfigValue<Integer> DECAY_SPAWN_RATE;
@@ -77,13 +80,16 @@ public class DecayingWorldOptionsHolder
                 .worldRestart()
                 .defineInRange("Decay spawn player radius", default_DECAY_SPAWN_PLAYER_RADIUS, 1, 256);
         this.DECAY_SPAWN_SAFE_RADIUS = builder.comment(
-                        "Radius around player in which to select a random block to courrupt")
+                        "Radius outside of which no couruption will spawn, but where beds can not be placed.")
                 .worldRestart()
-                .defineInRange("Decay spawn player radius", default_DECAY_SPAWN_PLAYER_RADIUS, 1, 256);
+                .defineInRange("No Decay Threshold radius", default_DECAY_SPAWN_SAFE_RADIUS, 1, 10000);
 
         this.SPAWN_COURRUPTION_ENABLE = builder.comment("Enable spawning of courruption")
                         .worldRestart()
                                 .define("Spawn Courruption Enabled", false);
+        this.BEDS_EXPLODE = builder.comment("Enable exploding of beds outside courruption radius")
+                .worldRestart()
+                .define("Exploding Beds Enabled", true);
         builder.pop();
     }
 }

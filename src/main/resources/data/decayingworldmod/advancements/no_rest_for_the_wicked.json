@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:purple_bed"
+    },
+    "title": "No Rest for the Wicked!",
+    "description": "Oh, no there ain't no rest for the wicked Until we close our eyes for good",
+    "hidden": true,
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "decayingworldmod:decayingworldmod",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "decayingworldmod:charred_pillow"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

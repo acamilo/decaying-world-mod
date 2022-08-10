@@ -65,9 +65,14 @@ public class DecayingWorldMod
     {
         MinecraftForge.EVENT_BUS.register(new DecaySpawnEventHandler());
 
+
         event.enqueueWork(() -> {
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.AETHER_ROSE.getId(), ModBlocks.POTTED_AETHER_ROSE);
         });
+
+
+
+
     }
 
 
