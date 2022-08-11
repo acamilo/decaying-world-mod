@@ -58,7 +58,7 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> PROTECTION_BLOCK = registerBlock("protection_block",
             () -> new ProtectionBlock(BlockBehaviour.Properties
-                        .of(Material.STONE).lightLevel(state -> state.getValue(ProtectionBlock.LIT) ? 15:0)), ModCreativeModeTab.DECAYING_WORLD_MOD_TAB);
+                        .of(Material.STONE).strength(9f).requiresCorrectToolForDrops().lightLevel(state -> state.getValue(ProtectionBlock.LIT) ? 15:0)), ModCreativeModeTab.DECAYING_WORLD_MOD_TAB);
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name,toReturn,tab);
