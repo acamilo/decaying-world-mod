@@ -90,7 +90,7 @@ public class DecaySpawnEventHandler
         BlockPos spawn = player.level.getSharedSpawnPos();
         BlockPos player_pos = player.getOnPos();
         // if in safe zone, can place beds
-        if (getDistance(spawn,player_pos)<DecayingWorldOptionsHolder.COMMON.DECAY_SPAWN_PLAYER_RADIUS.get()) return;
+        if (getDistance(spawn,player_pos)<DecayingWorldOptionsHolder.COMMON.DECAY_SPAWN_SAFE_RADIUS.get()) return;
 
         Block block = event.getPlacedBlock().getBlock();
 
