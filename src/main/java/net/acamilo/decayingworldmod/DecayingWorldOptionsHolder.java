@@ -21,14 +21,14 @@ public class DecayingWorldOptionsHolder
     private static double default_FAST_DECAY_BLOCK_SPAWN_CHANCE = 0.25;
     public final ForgeConfigSpec.ConfigValue<Double> FAST_DECAY_BLOCK_SPAWN_CHANCE;
 
-    private static int default_PROTECTION_RESOURCE_BURN_TIME = 3600*20;
+    private static int default_PROTECTION_RESOURCE_BURN_TIME = 189000;
     public final ForgeConfigSpec.ConfigValue<Integer> PROTECTION_RESOURCE_BURN_TIME;
 
-    private static int default_PROTECTION_BLOCK_PROTECTION_RADIUS = 32;
+    private static int default_PROTECTION_BLOCK_PROTECTION_RADIUS = 75;
     public final ForgeConfigSpec.ConfigValue<Integer> PROTECTION_BLOCK_PROTECTION_RADIUS;
     private static int default_DECAY_SPAWN_PLAYER_RADIUS = 100;
     public final ForgeConfigSpec.ConfigValue<Integer> DECAY_SPAWN_PLAYER_RADIUS;
-    private static int default_DECAY_SPAWN_SAFE_RADIUS = 2000;
+    private static int default_DECAY_SPAWN_SAFE_RADIUS = 1000;
     public final ForgeConfigSpec.ConfigValue<Integer> DECAY_SPAWN_SAFE_RADIUS;
 
 
@@ -36,6 +36,9 @@ public class DecayingWorldOptionsHolder
 
     private static boolean DEFAULT_BEDS_EXPLODE = true;
     public final ForgeConfigSpec.ConfigValue<Boolean> BEDS_EXPLODE;
+
+    private static boolean DEFAULT_ENABLE_DECAY = false;
+    public final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DECAY;
     //
     private static int default_DECAY_SPAWN_RATE = 20*120;
     public final ForgeConfigSpec.ConfigValue<Integer> DECAY_SPAWN_RATE;
@@ -90,6 +93,9 @@ public class DecayingWorldOptionsHolder
         this.BEDS_EXPLODE = builder.comment("Enable exploding of beds outside courruption radius")
                 .worldRestart()
                 .define("Exploding Beds Enabled", true);
+        this.ENABLE_DECAY = builder.comment("Enable decay spread")
+                .worldRestart()
+                .define("Decay Enabled", DEFAULT_ENABLE_DECAY);
         builder.pop();
     }
 }

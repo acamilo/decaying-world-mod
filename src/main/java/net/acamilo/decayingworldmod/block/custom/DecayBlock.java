@@ -48,6 +48,10 @@ public class DecayBlock extends Block {
             return;
         }
 
+        if (DecayingWorldOptionsHolder.COMMON.ENABLE_DECAY.get()==false){
+            serverLevel.setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
+            return;
+        }
         // replace self with decay sand
 
         if (source.nextDouble()>DecayingWorldOptionsHolder.COMMON.DECAY_BLOCK_SAND_CHANCE.get())
