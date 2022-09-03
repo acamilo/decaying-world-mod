@@ -40,7 +40,7 @@ public class DecayingWorldOptionsHolder
     private static boolean DEFAULT_ENABLE_DECAY = false;
     public final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DECAY;
     //
-    private static int default_DECAY_SPAWN_RATE = 20*120;
+    private static int default_DECAY_SPAWN_RATE = 240;
     public final ForgeConfigSpec.ConfigValue<Integer> DECAY_SPAWN_RATE;
 
     public final ForgeConfigSpec.ConfigValue<Boolean> SPAWN_COURRUPTION_ENABLE;
