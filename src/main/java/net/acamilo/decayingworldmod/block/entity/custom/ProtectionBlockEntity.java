@@ -19,6 +19,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -178,24 +179,36 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
     public static void tick(Level level, BlockPos pos, BlockState state, ProtectionBlockEntity pBlockEntity) {
+        if(pBlockEntity.level.isClientSide()) return; // if on client, exit
 
-        if (pBlockEntity.progress==0 && pBlockEntity.protectionEventFired==false)
-            if(!pBlockEntity.level.isClientSide()) {
-                removePosition(new DimensionAwareBlockPosition(pos,level.dimension()));
-                level.setBlock(pos,state.setValue(ProtectionBlock.LIT,Boolean.valueOf(false)),3);
-                pBlockEntity.protectionEventFired=true;
-            }
+
+        if (pBlockEntity.progress> pBlockEntity.maxProgress)
+            pBlockEntity.progress= pBlockEntity.maxProgress;
 
         if (pBlockEntity.progress>0){
             pBlockEntity.progress--;
+            LOGGER.debug("Progress: " + pBlockEntity.progress);
             setChanged(level,pos,state);
-        }
-        if (burnItem(pBlockEntity))
-            if(!pBlockEntity.level.isClientSide()) {
-                registerPosition(new DimensionAwareBlockPosition(pos,level.dimension()));
-                level.setBlock(pos,state.setValue(ProtectionBlock.LIT,Boolean.valueOf(true)),3);
-                pBlockEntity.protectionEventFired=false;
+        } else { // resource consumed
+            if (burnItem(pBlockEntity)) { // try and consume another
+                LOGGER.debug("Protection block has consumed a crysta1!");
+                registerPosition(new DimensionAwareBlockPosition(pos, level.dimension()));
+                level.setBlock(pos, state.setValue(ProtectionBlock.LIT, Boolean.valueOf(true)), 3);
+                pBlockEntity.progress= pBlockEntity.maxProgress;
+                if (pBlockEntity.protectionEventFired == true) //
+                    pBlockEntity.protectionEventFired = false;
+            } else { // consumption failed
+                if (pBlockEntity.protectionEventFired == false) {
+                    LOGGER.debug("Protection block has failed to consume a crysta1!");
+                    removePosition(new DimensionAwareBlockPosition(pos, level.dimension()));
+                    level.setBlock(pos, state.setValue(ProtectionBlock.LIT, Boolean.valueOf(false)), 3);
+                    pBlockEntity.protectionEventFired = true;
+                }
+
             }
+
+
+        }
 
 
     }
@@ -203,9 +216,13 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
     private static boolean burnItem(ProtectionBlockEntity entity){
         boolean hasItemInSlot = entity.itemHandler.getStackInSlot(0).getItem() == ModItems.AETHER_CRYSTAL.get();
         if (hasItemInSlot && entity.progress==0){
-            entity.itemHandler.extractItem(0, 1, false);
-            entity.progress= entity.maxProgress;
-            return true;
+            @NotNull ItemStack x = entity.itemHandler.extractItem(0, 1, false);
+            if (x.isEmpty()){
+                return false;
+            } else {
+                entity.progress = entity.maxProgress;
+                return true;
+            }
         }
     return false;
 

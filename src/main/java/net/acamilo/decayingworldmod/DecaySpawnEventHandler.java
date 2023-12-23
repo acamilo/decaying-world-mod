@@ -146,7 +146,7 @@ public class DecaySpawnEventHandler
                 LOGGER.info(target+" not air");
                 boolean safe=false;
                 for (DimensionAwareBlockPosition prot : ProtectionBlockEntity.PROTECTED_BLOCKS) {
-                    if (ProtectionBlockEntity.getDistance(target, prot.position) < DecayingWorldOptionsHolder.COMMON.PROTECTION_BLOCK_PROTECTION_RADIUS.get() && prot.level.equals(world)) {
+                    if (ProtectionBlockEntity.getDistance(target, prot.position) <= DecayingWorldOptionsHolder.COMMON.PROTECTION_BLOCK_PROTECTION_RADIUS.get() && prot.level.equals(world)) {
                        safe=true;
                     }
                 }

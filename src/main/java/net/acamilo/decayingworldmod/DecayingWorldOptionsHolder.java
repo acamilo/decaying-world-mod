@@ -11,20 +11,20 @@ public class DecayingWorldOptionsHolder
     private static final int defaultInt1 = 37;
     private static final boolean defaultBool1 = true;
 
-    private static int default_DECAY_BLOCK_SPREAD_DELAY = 1000;
+    private static int default_DECAY_BLOCK_SPREAD_DELAY = 100;
     public final ForgeConfigSpec.ConfigValue<Integer> DECAY_BLOCK_SPREAD_DELAY;
     private static int default_FAST_DECAY_BLOCK_SPREAD_DELAY = 5;
     public final ForgeConfigSpec.ConfigValue<Integer> FAST_DECAY_BLOCK_SPREAD_DELAY;
 
     private static double default_DECAY_BLOCK_SAND_CHANCE = 0.05;
     public final ForgeConfigSpec.ConfigValue<Double> DECAY_BLOCK_SAND_CHANCE;
-    private static double default_FAST_DECAY_BLOCK_SPAWN_CHANCE = 0.25;
+    private static double default_FAST_DECAY_BLOCK_SPAWN_CHANCE = 0.75;
     public final ForgeConfigSpec.ConfigValue<Double> FAST_DECAY_BLOCK_SPAWN_CHANCE;
 
-    private static int default_PROTECTION_RESOURCE_BURN_TIME = 189000;
+    private static int default_PROTECTION_RESOURCE_BURN_TIME = 18900;
     public final ForgeConfigSpec.ConfigValue<Integer> PROTECTION_RESOURCE_BURN_TIME;
 
-    private static int default_PROTECTION_BLOCK_PROTECTION_RADIUS = 75;
+    private static int default_PROTECTION_BLOCK_PROTECTION_RADIUS = 25;
     public final ForgeConfigSpec.ConfigValue<Integer> PROTECTION_BLOCK_PROTECTION_RADIUS;
     private static int default_DECAY_SPAWN_PLAYER_RADIUS = 100;
     public final ForgeConfigSpec.ConfigValue<Integer> DECAY_SPAWN_PLAYER_RADIUS;
