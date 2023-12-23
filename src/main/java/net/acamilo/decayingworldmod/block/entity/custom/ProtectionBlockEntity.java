@@ -187,7 +187,7 @@ public class ProtectionBlockEntity extends BlockEntity implements MenuProvider {
 
         if (pBlockEntity.progress>0){
             pBlockEntity.progress--;
-            LOGGER.debug("Progress: " + pBlockEntity.progress);
+            //LOGGER.debug("Progress: " + pBlockEntity.progress);
             setChanged(level,pos,state);
         } else { // resource consumed
             if (burnItem(pBlockEntity)) { // try and consume another
